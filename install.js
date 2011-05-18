@@ -5,6 +5,7 @@ var fs  = require('fs'),
     http = require('http'),
     BufferStream = require('bufferstream'),
 
+// http://www.ksu.ru/eng/departments/ktk/test/perl/lib/unicode/UCDFF301.html
 keys =  ['value', 'name', 'category', 'class',
     'bidirectional_category', 'mapping', 'decimal_digit_value', 'digit_value',
     'numeric_value', 'mirrored', 'unicode_name', 'comment', 'uppercase_mapping',
