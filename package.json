@@ -1,0 +1,15 @@
+{ "name": "unicode"
+, "description": "unicode lookup table"
+, "version": "0.0.1"
+, "author": "dodo (https://github.com/dodo)"
+, "homepage": "http://github.com/dodo/node-unicodettable"
+, "repository": {
+    "type": "git",
+    "url": "git://github.com/dodo/node-unicodetable.git"
+  }
+, "engines": {"node": "0.4.x"}
+, "scripts": {"install": "./install.js"}
+, "dependencies": {
+    "bufferstream": ">= 0.0.2"
+  }
+}
