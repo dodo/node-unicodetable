@@ -10,7 +10,7 @@ loads http://unicode.org/Public/UNIDATA/UnicodeData.txt into [nodejs](http://nod
 ## example
 
     master//node-unicodetable » node
-    > require('unicode/category/So')[9829]
+    > require('unicode/category/So')["♥".charCodeAt(0)]
     { value: '2665',
       name: 'BLACK HEART SUIT',
       category: 'So',
