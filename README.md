@@ -4,6 +4,7 @@ loads http://unicode.org/Public/UNIDATA/UnicodeData.txt into [nodejs](http://nod
 
 ## install
 
+    sudo apt-get install unicode-data # optional
     npm install unicode
 
 
