@@ -10,6 +10,7 @@ keys =  ['value', 'name', 'category', 'class',
     'bidirectional_category', 'mapping', 'decimal_digit_value', 'digit_value',
     'numeric_value', 'mirrored', 'unicode_name', 'comment', 'uppercase_mapping',
     'lowercase_mapping', 'titlecase_mapping'],
+systemfile = "/usr/share/unicode/UnicodeData.txt",
 unicodedatafile = {
     host: "unicode.org",
     path: "/Public/UNIDATA/UnicodeData.txt",
@@ -25,16 +26,13 @@ save = function (filename, object) {
         if (err) throw err;
         if (!--counter) console.log("done.");
     });
-};
+},
 
-http.get(unicodedatafile, function (res) {
+
+
+parser = function () {
     var data = {},
         buffer = new BufferStream('utf8');
-
-    console.log("fetching %s%s …", unicodedatafile.host, unicodedatafile.path);
-
-    res.setEncoding('utf8');
-    res.pipe(buffer);
 
     buffer.split('\n', function (line) {
         var v, c, char = {},
@@ -64,5 +62,38 @@ http.get(unicodedatafile, function (res) {
         throw err;
     });
 
+    return buffer;
+},
+
+read_file = function (callback) {
+    console.log("try to read file %s …", systemfile);
+    fs.readFile(systemfile, 'utf8', function (err, data) {
+        if (err) return callback();
+        var buffer = parser();
+        buffer.end(data);
+    });
+},
+
+download_file = function (callback) {
+    console.log("%s %s:%d%s", unicodedatafile.method, unicodedatafile.host,
+                unicodedatafile.port, unicodedatafile.path);
+    http.get(unicodedatafile, function (res) {
+        console.log("fetching …");
+
+        res.setEncoding('utf8');
+        res.pipe(parser());
+    });
+    setTimeout(function () {
+        console.log("request timed out.");
+        callback();
+    }, 30 * 1000);
+};
+
+
+// run
+
+read_file(function () {
+    console.log("%s not found. try to download …", systemfile);
+    download_file(process.exit);
 });
 
