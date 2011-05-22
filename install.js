@@ -69,6 +69,7 @@ read_file = function (callback) {
     console.log("try to read file %s …", systemfile);
     fs.readFile(systemfile, 'utf8', function (err, data) {
         if (err) return callback();
+        console.log("parsing …");
         var buffer = parser();
         buffer.end(data);
     });
