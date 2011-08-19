@@ -2,7 +2,7 @@
 , "description": "unicode lookup table"
 , "version": "0.1.4"
 , "author": "dodo (https://github.com/dodo)"
-, "homepage": "http://github.com/dodo/node-unicodettable"
+, "homepage": "http://github.com/dodo/node-unicodetable"
 , "repository": {
     "type": "git",
     "url": "git://github.com/dodo/node-unicodetable.git"
