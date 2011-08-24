@@ -32,7 +32,7 @@ save = function (filename, object) {
 
 parser = function () {
     var data = {},
-        buffer = new BufferStream('utf8');
+        buffer = new BufferStream({encoding:'utf8', size:'flexible'});
 
     buffer.split('\n', function (line) {
         var v, c, char = {},
