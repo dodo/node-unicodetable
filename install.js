@@ -19,18 +19,19 @@ unicodedatafile = {
 },
 
 counter = 0,
-save = function (filename, object) {
+save = function (filename, object, callback) {
     var filename = path.join(__dirname, "category", filename);
     var data = "module.exports=" + JSON.stringify(object);
     fs.writeFile(filename, data, 'utf8', function (err) {
         if (err) throw err;
         if (!--counter) console.log("done.");
+        callback(!counter);
     });
 },
 
 
 
-parser = function () {
+parser = function (callback) {
     var data = {},
         buffer = new BufferStream({encoding:'utf8', size:'flexible'});
 
@@ -52,7 +53,9 @@ parser = function () {
         for(var i = 0 ; i < len ; i++) {
             cat = categories[i];
             console.log("saving data as %s.js …", cat);
-            save(cat + ".js", data[cat]);
+            save(cat + ".js", data[cat], function (done) {
+                if (done) callback();
+            });
         }
     });
 
@@ -65,12 +68,12 @@ parser = function () {
     return buffer;
 },
 
-read_file = function (callback) {
+read_file = function (success_cb, error_cb) {
     console.log("try to read file %s …", systemfile);
     fs.readFile(systemfile, 'utf8', function (err, data) {
-        if (err) return callback();
+        if (err) return error_cb();
         console.log("parsing …");
-        var buffer = parser();
+        var buffer = parser(success_cb);
         buffer.end(data);
     });
 },
@@ -82,7 +85,7 @@ download_file = function (callback) {
         console.log("fetching …");
 
         res.setEncoding('utf8');
-        res.pipe(parser());
+        res.pipe(parser(callback));
     });
     setTimeout(function () {
         console.log("request timed out.");
@@ -93,7 +96,7 @@ download_file = function (callback) {
 
 // run
 
-read_file(function () {
+read_file(process.exit, function () {
     console.log("%s not found. try to download …", systemfile);
     download_file(process.exit);
 });
