@@ -1,6 +1,6 @@
 { "name": "unicode"
 , "description": "unicode lookup table"
-, "version": "0.1.4"
+, "version": "0.2.0"
 , "author": "dodo (https://github.com/dodo)"
 , "homepage": "http://github.com/dodo/node-unicodettable"
 , "repository": {
