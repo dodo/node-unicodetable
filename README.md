@@ -5,7 +5,11 @@ loads http://unicode.org/Public/UNIDATA/UnicodeData.txt into [nodejs](http://nod
 ## install
 
 ```bash
+# debian
 sudo apt-get install unicode-data # optional
+# gentoo
+sudo emerge unicode-data # optional
+
 npm install unicode
 ```
 
