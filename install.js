@@ -10,7 +10,10 @@ keys =  ['value', 'name', 'category', 'class',
     'bidirectional_category', 'mapping', 'decimal_digit_value', 'digit_value',
     'numeric_value', 'mirrored', 'unicode_name', 'comment', 'uppercase_mapping',
     'lowercase_mapping', 'titlecase_mapping'],
-systemfile = "/usr/share/unicode/UnicodeData.txt",
+systemfiles = [
+    "/usr/share/unicode/UnicodeData.txt", // debian
+    "/usr/share/unicode-data/UnicodeData.txt", // gentoo
+],
 unicodedatafile = {
     host: "unicode.org",
     path: "/Public/UNIDATA/UnicodeData.txt",
@@ -69,13 +72,23 @@ parser = function (callback) {
 },
 
 read_file = function (success_cb, error_cb) {
-    console.log("try to read file %s …", systemfile);
-    fs.readFile(systemfile, 'utf8', function (err, data) {
-        if (err) return error_cb();
-        console.log("parsing …");
-        var buffer = parser(success_cb);
-        buffer.end(data);
-    });
+    var systemfile, sysfiles = systemfiles.slice(),
+    try_reading = function (success, error) {
+        systemfile = sysfiles.shift();
+        if (!systemfile) return error_cb();
+        console.log("try to read file %s …", systemfile);
+        fs.readFile(systemfile, 'utf8', function (err, data) {
+            if (err) {
+                console.log("%s not found.", systemfile);
+                return try_reading(success_cb, error_cb);
+            }
+            console.log("parsing …");
+            var buffer = parser(success_cb);
+            buffer.end(data);
+        });
+
+    };
+    try_reading(success_cb, error_cb);
 },
 
 download_file = function (callback) {
@@ -97,7 +110,7 @@ download_file = function (callback) {
 // run
 
 read_file(process.exit, function () {
-    console.log("%s not found. try to download …", systemfile);
+    console.log("try to download …");
     download_file(process.exit);
 });
 
