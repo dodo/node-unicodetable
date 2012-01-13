@@ -10,6 +10,6 @@
 , "engines": {"node": ">= 0.4.x"}
 , "scripts": {"postinstall": "./install.js", "update":"./install.js"}
 , "dependencies": {
-    "bufferstream": ">= 0.4.10"
+    "bufferstream": ">= 0.5.0-pre"
   }
 }
