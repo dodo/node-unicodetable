@@ -46,12 +46,7 @@ parser = function (callback) {
         for(var i = 0 ; i < 15 ; i++)
             char[keys[i]] = values[i];
         v = parseInt(char.value, 16);
-        try {
-            char.symbol = encode([v]);
-        } catch (e) {
-            // Since surrogate halves are always in the BMP:
-            char.symbol = String.fromCharCode(v);
-        }
+        char.symbol = encode([v]);
         c = char.category;
         if (!data[c])
             data[c] = {};
