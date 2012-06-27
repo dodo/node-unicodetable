@@ -4,8 +4,6 @@ var fs  = require('fs'),
     path = require('path'),
     http = require('http'),
     BufferStream = require('bufferstream'),
-    punycode = require('./node_modules/punycode'), // FIXME
-    encode = (punycode.ucs2 || punycode.utf16).encode,
 
 // http://www.ksu.ru/eng/departments/ktk/test/perl/lib/unicode/UCDFF301.html
 keys =  ['value', 'name', 'category', 'class',
@@ -24,6 +22,21 @@ unicodedatafile = {
 },
 
 counter = 0,
+
+stringFromCharCode = String.fromCharCode,
+
+// Based on http://mths.be/punycode
+encode = function (codePoint) {
+    var output = '';
+    if (codePoint > 0xFFFF) {
+        codePoint -= 0x10000;
+        output += stringFromCharCode(codePoint >>> 10 & 0x3FF | 0xD800);
+        codePoint = 0xDC00 | codePoint & 0x3FF;
+    }
+    output += stringFromCharCode(codePoint);
+    return output;
+},
+
 save = function (filename, object, callback) {
     var filename = path.join(__dirname, "category", filename);
     var data = "module.exports=" + JSON.stringify(object);
@@ -33,8 +46,6 @@ save = function (filename, object, callback) {
         callback(!counter);
     });
 },
-
-
 
 parser = function (callback) {
     var data = {},
@@ -46,7 +57,7 @@ parser = function (callback) {
         for(var i = 0 ; i < 15 ; i++)
             char[keys[i]] = values[i];
         v = parseInt(char.value, 16);
-        char.symbol = encode([v]);
+        char.symbol = encode(v);
         c = char.category;
         if (!data[c])
             data[c] = {};
