@@ -2,6 +2,7 @@
 , "description": "unicode lookup table"
 , "version": "0.4.2"
 , "author": "dodo (https://github.com/dodo)"
+, "contributors": ["Mathias Bynens <mathias@qiwi.be> (http://mathiasbynens.be/)"]
 , "homepage": "http://github.com/dodo/node-unicodetable"
 , "repository": {
     "type": "git",
