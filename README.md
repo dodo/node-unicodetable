@@ -32,5 +32,6 @@ master//node-unicodetable » node
   comment: '',
   uppercase_mapping: '',
   lowercase_mapping: '',
-  titlecase_mapping: '' }
+  titlecase_mapping: '',
+  symbol: '♥' }
 ```

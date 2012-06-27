@@ -11,5 +11,6 @@
 , "scripts": {"postinstall": "./install.js", "update":"./install.js"}
 , "dependencies": {
     "bufferstream": ">= 0.5.0-pre"
+,   "punycode": ">= 1.0.0"
   }
 }

@@ -4,6 +4,8 @@ var fs  = require('fs'),
     path = require('path'),
     http = require('http'),
     BufferStream = require('bufferstream'),
+    punycode = require('punycode'),
+    encode = (punycode.ucs2 || punycode.utf16).encode,
 
 // http://www.ksu.ru/eng/departments/ktk/test/perl/lib/unicode/UCDFF301.html
 keys =  ['value', 'name', 'category', 'class',
@@ -44,6 +46,11 @@ parser = function (callback) {
         for(var i = 0 ; i < 15 ; i++)
             char[keys[i]] = values[i];
         v = parseInt(char.value, 16);
+        try {
+            char.symbol = encode([v]);
+        } catch (e) {
+            console.error(e + " " + v);
+        }
         c = char.category;
         if (!data[c])
             data[c] = {};
