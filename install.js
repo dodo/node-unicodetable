@@ -4,7 +4,7 @@ var fs  = require('fs'),
     path = require('path'),
     http = require('http'),
     BufferStream = require('bufferstream'),
-    punycode = require('punycode'),
+    punycode = require('./node_modules/punycode'), // FIXME
     encode = (punycode.ucs2 || punycode.utf16).encode,
 
 // http://www.ksu.ru/eng/departments/ktk/test/perl/lib/unicode/UCDFF301.html
