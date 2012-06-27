@@ -49,7 +49,8 @@ parser = function (callback) {
         try {
             char.symbol = encode([v]);
         } catch (e) {
-            console.error(e + " " + v);
+            // Since surrogate halves are always in the BMP:
+            char.symbol = String.fromCharCode(v);
         }
         c = char.category;
         if (!data[c])
