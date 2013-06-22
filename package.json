@@ -9,7 +9,7 @@
     "url": "git://github.com/dodo/node-unicodetable.git"
   }
 , "engines": {"node": ">= 0.4.x"}
-, "scripts": {"postinstall": "./install.js", "update":"./install.js"}
+, "scripts": {"postinstall": "node install.js", "update": "node install.js"}
 , "dependencies": {
     "bufferstream": ">= 0.5.1"
   }
