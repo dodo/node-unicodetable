@@ -94,7 +94,7 @@ read_file = function (success_cb, error_cb) {
         console.log("try to read file %s …", systemfile);
         fs.readFile(systemfile, 'utf8', function (err, data) {
             if (err) {
-                console.log("%s not found.", systemfile);
+                console.error("%s not found.", systemfile);
                 return try_reading(success_cb, error_cb);
             }
             console.log("parsing …");
@@ -123,7 +123,7 @@ download_file = function (callback) {
         callback();
     });
     setTimeout(function () {
-        console.log("request timed out.");
+        console.error("request timed out.");
         callback();
     }, 30 * 1000);
 };
