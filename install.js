@@ -13,6 +13,7 @@ keys =  ['value', 'name', 'category', 'class',
 systemfiles = [
     "/usr/share/unicode/UnicodeData.txt", // debian
     "/usr/share/unicode-data/UnicodeData.txt", // gentoo
+    "UnicodeData.txt", // manually downloaded
 ],
 unicodedatafile = {
     host: "unicode.org",
@@ -113,6 +114,13 @@ download_file = function (callback) {
 
         res.setEncoding('utf8');
         res.pipe(parser(callback));
+    }).on('error', function (err) {
+        console.error("Error while downloading %s: %s",
+                      path.basename(unicodedatafile.path), err);
+        console.log("Please download file manually,",
+                    "put it next to the install.js file and",
+                    "run `node install.js` again.");
+        callback();
     });
     setTimeout(function () {
         console.log("request timed out.");
