@@ -92,14 +92,13 @@ read_file = function (success_cb, error_cb) {
         systemfile = sysfiles.shift();
         if (!systemfile) return error_cb();
         console.log("try to read file %s …", systemfile);
-        fs.readFile(systemfile, 'utf8', function (err, data) {
-            if (err) {
+        fs.exists(systemfile, function (exists) {
+            if (!exists) {
                 console.error("%s not found.", systemfile);
                 return try_reading(success_cb, error_cb);
             }
             console.log("parsing …");
-            var buffer = parser(success_cb);
-            buffer.end(data);
+            fs.createReadStream(systemfile, 'utf8').pipe(parser(success_cb));
         });
 
     };
