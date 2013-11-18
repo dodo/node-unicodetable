@@ -1,6 +1,6 @@
 { "name": "unicode"
 , "description": "unicode lookup table"
-, "version": "0.4.5"
+, "version": "0.4.6"
 , "author": "dodo (https://github.com/dodo)"
 , "contributors": ["Mathias Bynens <mathias@qiwi.be> (http://mathiasbynens.be/)"]
 , "homepage": "http://github.com/dodo/node-unicodetable"
