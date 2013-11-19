@@ -8,8 +8,11 @@
     "type": "git",
     "url": "git://github.com/dodo/node-unicodetable.git"
   }
-, "engines": {"node": ">= 0.4.x"}
-, "scripts": {"postinstall": "node install.js", "update": "node install.js"}
+, "engines": {"node": ">= 0.8.x"}
+, "scripts": {
+    "postinstall": "node install.js",
+    "update": "node install.js",
+    "test": "node test.js"}
 , "dependencies": {
     "bufferstream": ">= 0.6.2"
   }
