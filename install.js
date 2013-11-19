@@ -22,7 +22,7 @@ unicodedatafile = {
     port:80,
 },
 
-counter = 0,
+refs = 0,
 
 stringFromCharCode = String.fromCharCode,
 
@@ -38,19 +38,29 @@ encode = function (codePoint) {
     return output;
 },
 
-save = function (filename, object, callback) {
-    var filename = path.join(__dirname, "category", filename);
-    var data = "module.exports=" + JSON.stringify(object);
-    fs.writeFile(filename, data, 'utf8', function (err) {
-        if (err) throw err;
-        if (!--counter) console.log("done.");
-        callback(!counter);
+stringify = function (key, value) {
+    var data = {};
+    data[key] = value;
+    return JSON.stringify(data).replace(/^{(.*)}$/, "$1");
+},
+
+newFile = function (name, callback) {
+    var filename = path.join(__dirname, "category", name + ".js"),
+        file = fs.createWriteStream(filename, 'utf8');
+    file.once('close', function () {
+        if (!--refs) {
+            console.log("done.");
+            callback();
+        }
     });
+    refs++;
+    return file;
 },
 
 parser = function (callback) {
     var data = {},
-        buffer = new BufferStream({encoding:'utf8', size:'flexible'});
+        buffer = new BufferStream({encoding:'utf8', size:'flexible'}),
+        resume = buffer.resume.bind(buffer);
 
     buffer.split('\n', function (line) {
         var v, c, char = {},
@@ -60,20 +70,27 @@ parser = function (callback) {
         v = parseInt(char.value, 16);
         char.symbol = encode(v);
         c = char.category;
-        if (!data[c])
-            data[c] = {};
-        data[c][v] = char;
+        if (!data[c]) {
+            data[c] = newFile(c, callback)
+                .on('drain', resume)
+                .once('open', function () {
+                    console.log("saving data as %s.js …", c);
+                    this.write('module.exports={' + stringify(v, char));
+                    buffer.resume();
+                });
+            buffer.pause();
+        } else if (!data[c].write("," + stringify(v, char))) {
+            buffer.pause();
+        }
     });
+
 
     buffer.on('end', function () {
         var cat, categories = Object.keys(data),
-            len = counter = categories.length;
+            len = categories.length;
         for(var i = 0 ; i < len ; i++) {
             cat = categories[i];
-            console.log("saving data as %s.js …", cat);
-            save(cat + ".js", data[cat], function (done) {
-                if (done) callback();
-            });
+            data[cat].end("};");
         }
     });
 
