@@ -73,8 +73,8 @@ parser = function (callback) {
                 .on('drain', resume)
                 .once('open', function () {
                     console.log("saving data as %s.js …", c);
-                    this.write('module.exports={' + stringify(v, char));
-                    buffer.resume();
+                    if (this.write('module.exports={' + stringify(v, char)))
+                        buffer.resume();
                 });
             buffer.pause();
         } else if (!data[c].write("," + stringify(v, char))) {
