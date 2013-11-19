@@ -11,6 +11,6 @@
 , "engines": {"node": ">= 0.4.x"}
 , "scripts": {"postinstall": "node install.js", "update": "node install.js"}
 , "dependencies": {
-    "bufferstream": ">= 0.5.1"
+    "bufferstream": ">= 0.6.2"
   }
 }
