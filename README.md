@@ -2,6 +2,9 @@
 
 loads http://unicode.org/Public/UNIDATA/UnicodeData.txt into [nodejs](http://nodejs.org).
 
+[![Build Status](https://secure.travis-ci.org/dodo/node-unicodetable.png)](http://travis-ci.org/dodo/node-unicodetable)
+
+
 ## install
 
 ```bash
