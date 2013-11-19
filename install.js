@@ -44,7 +44,7 @@ stringify = function (key, value) {
 
 newFile = function (name, callback) {
     var filename = path.join(__dirname, "category", name + ".js"),
-        file = fs.createWriteStream(filename, 'utf8');
+        file = fs.createWriteStream(filename, {encoding:'utf8'});
     file.once('close', function () {
         if (!--refs) {
             console.log("done.");
@@ -113,7 +113,7 @@ read_file = function (success_cb, error_cb) {
                 return try_reading(success_cb, error_cb);
             }
             console.log("parsing …");
-            fs.createReadStream(systemfile, 'utf8').pipe(parser(success_cb));
+            fs.createReadStream(systemfile, {encoding:'utf8'}).pipe(parser(success_cb));
         });
 
     };
