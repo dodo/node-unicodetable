@@ -39,9 +39,7 @@ encode = function (codePoint) {
 },
 
 stringify = function (key, value) {
-    var data = {};
-    data[key] = value;
-    return JSON.stringify(data).replace(/^{(.*)}$/, "$1");
+    return key + ":" + JSON.stringify(value);
 },
 
 newFile = function (name, callback) {
