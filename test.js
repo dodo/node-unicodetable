@@ -7,7 +7,8 @@ var categories = [
     "Nd Nl No",
     "Pc Pd Pe Pf Pi Po Ps",
     "Sc Sk Sm So",
-    "Zl Zp Zs"].join(' ').split(' ');
+//     "Zl Zp Zs", FIXME
+].join(' ').split(' ');
 
 
 process.stdout.write("   install\r ");
