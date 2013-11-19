@@ -23,7 +23,7 @@ require('child_process').exec("node install.js", {stdio:'ignore'}, function (err
             delete require.cache[path.join(__dirname, 'category', cat+".js")];
             // ✓
             process.stdout.write("\x1B[32m✓\x1B[39m\n");
-        }, function (err) {console.log(err);return !!err}, "failed to load "+cat+".js");
+        }, function(err){if(err){console.error(err);return 1}}, "failed to load "+cat+".js");
     });
     console.log("done.");
     process.exit(0);
