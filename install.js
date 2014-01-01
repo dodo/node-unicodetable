@@ -22,21 +22,21 @@ unicodedatafile = {
     port:80,
 },
 
-refs = 0,
+refs = 0;
 
 // based on https://github.com/mathiasbynens/jsesc
-escape = function (charValue) {
+function escape(charValue) {
     var hexadecimal = charValue.replace(/^0*/, ''); // is already in hexadecimal
     var longhand = hexadecimal.length > 2;
     return '\\' + (longhand ? 'u' : 'x') +
             ('0000' + hexadecimal).slice(longhand ? -4 : -2);
-},
+}
 
-stringify = function (key, value) {
+function stringify(key, value) {
     return key + ":" + JSON.stringify(value).replace(/\\\\(u|x)/, "\\$1");
-},
+}
 
-newFile = function (name, callback) {
+function newFile(name, callback) {
     var filename = path.join(__dirname, "category", name + ".js"),
         file = fs.createWriteStream(filename, {encoding:'utf8'});
     file.once('close', function () {
@@ -47,9 +47,9 @@ newFile = function (name, callback) {
     });
     refs++;
     return file;
-},
+}
 
-parser = function (callback) {
+function parser(callback) {
     var data = {},
         buffer = new BufferStream({encoding:'utf8', size:'flexible'}),
         resume = buffer.resume.bind(buffer);
@@ -93,9 +93,9 @@ parser = function (callback) {
     });
 
     return buffer;
-},
+}
 
-read_file = function (success_cb, error_cb) {
+function read_file(success_cb, error_cb) {
     var systemfile, sysfiles = systemfiles.slice(),
     try_reading = function (success, error) {
         systemfile = sysfiles.shift();
@@ -112,9 +112,9 @@ read_file = function (success_cb, error_cb) {
 
     };
     try_reading(success_cb, error_cb);
-},
+}
 
-download_file = function (callback) {
+function download_file(callback) {
     console.log("%s %s:%d%s", unicodedatafile.method, unicodedatafile.host,
                 unicodedatafile.port, unicodedatafile.path);
     http.get(unicodedatafile, function (res) {
@@ -134,13 +134,23 @@ download_file = function (callback) {
         console.error("request timed out.");
         callback();
     }, 30 * 1000);
-};
+}
 
 
 // run
-
-read_file(process.exit, function () {
-    console.log("try to download …");
-    download_file(process.exit);
-});
+if (!module.parent) { // not required
+    read_file(process.exit, function () {
+        console.log("try to download …");
+        download_file(process.exit);
+    });
+} else {
+    module.exports = {
+        escape:escape,
+        stringify:stringify,
+        newFile:newFile,
+        parser:parser,
+        read_file:read_file,
+        download_file:download_file,
+    };
+}
 
