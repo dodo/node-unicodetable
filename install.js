@@ -24,22 +24,16 @@ unicodedatafile = {
 
 refs = 0,
 
-stringFromCharCode = String.fromCharCode,
-
-// Based on http://mths.be/punycode
-encode = function (codePoint) {
-    var output = '';
-    if (codePoint > 0xFFFF) {
-        codePoint -= 0x10000;
-        output += stringFromCharCode(codePoint >>> 10 & 0x3FF | 0xD800);
-        codePoint = 0xDC00 | codePoint & 0x3FF;
-    }
-    output += stringFromCharCode(codePoint);
-    return output;
+// based on https://github.com/mathiasbynens/jsesc
+escape = function (charValue) {
+    var hexadecimal = charValue.replace(/^0*/, ''); // is already in hexadecimal
+    var longhand = hexadecimal.length > 2;
+    return '\\' + (longhand ? 'u' : 'x') +
+            ('0000' + hexadecimal).slice(longhand ? -4 : -2);
 },
 
 stringify = function (key, value) {
-    return key + ":" + JSON.stringify(value);
+    return key + ":" + JSON.stringify(value).replace(/\\\\(u|x)/, "\\$1");
 },
 
 newFile = function (name, callback) {
@@ -66,7 +60,7 @@ parser = function (callback) {
         for(var i = 0 ; i < 15 ; i++)
             char[keys[i]] = values[i];
         v = parseInt(char.value, 16);
-        char.symbol = encode(v);
+        char.symbol = escape(char.value);
         c = char.category;
         if (!data[c]) {
             data[c] = newFile(c, callback)
