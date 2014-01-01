@@ -7,7 +7,7 @@ var categories = [
     "Nd Nl No",
     "Pc Pd Pe Pf Pi Po Ps",
     "Sc Sk Sm So",
-//     "Zl Zp Zs", FIXME
+    "Zl Zp Zs",
 ].join(' ').split(' ');
 
 
