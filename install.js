@@ -129,11 +129,11 @@ function download_file(callback) {
         console.log("Please download file manually,",
                     "put it next to the install.js file and",
                     "run `node install.js` again.");
-        callback();
+        callback(1);
     });
     setTimeout(function () {
         console.error("request timed out.");
-        callback();
+        callback(1);
     }, 30 * 1000);
 }
 
