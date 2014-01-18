@@ -116,10 +116,15 @@ function read_file(success_cb, error_cb) {
 }
 
 function download_file(callback) {
+    var timeouthandle = null;
     console.log("%s %s:%d%s", unicodedatafile.method, unicodedatafile.host,
                 unicodedatafile.port, unicodedatafile.path);
     http.get(unicodedatafile, function (res) {
         console.log("fetching …");
+
+        // stop timeout couting
+        if (timeouthandle)
+            clearTimeout(timeouthandle);
 
         res.setEncoding('utf8');
         res.pipe(parser(callback));
@@ -131,7 +136,7 @@ function download_file(callback) {
                     "run `node install.js` again.");
         callback(1);
     });
-    setTimeout(function () {
+    timeouthandle = setTimeout(function () {
         console.error("request timed out.");
         callback(1);
     }, 30 * 1000);
