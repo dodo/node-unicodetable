@@ -16,4 +16,7 @@
 , "dependencies": {
     "bufferstream": ">= 0.6.2"
   }
+, "licenses" : [
+    { "type": "MIT" ,
+      "url": "http://github.com/dodo/node-unicodetable/raw/master/LICENSE"} ]
 }
