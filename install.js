@@ -25,6 +25,11 @@ unicodedatafile = {
 
 refs = 0;
 
+var proxyServer = process.env.HTTPS_PROXY
+|| process.env.https_proxy
+|| process.env.HTTP_PROXY
+|| process.env.http_proxy;
+
 // based on https://github.com/mathiasbynens/jsesc
 function escape(charValue) {
     var hexadecimal = charValue.replace(/^0*/, ''); // is already in hexadecimal
@@ -119,6 +124,17 @@ function download_file(callback) {
     var timeouthandle = null;
     console.log("%s %s:%d%s", unicodedatafile.method, unicodedatafile.host,
                 unicodedatafile.port, unicodedatafile.path);
+
+    if (proxyServer) {
+        var proxyVars = proxyServer.match(/^(http:\/\/)?([^:\/]+)(:([0-9]+))?/i);
+
+        console.log('Proxy server detected, using proxy settings to download (%s)', proxyServer);
+
+        unicodedatafile.path = unicodedatafile.host + unicodedatafile.path;
+        unicodedatafile.host = proxyVars[2];
+        unicodedatafile.port = proxyVars[4];
+    }
+
     http.get(unicodedatafile, function (res) {
         console.log("fetching …");
 
