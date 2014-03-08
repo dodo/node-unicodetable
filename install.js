@@ -23,12 +23,13 @@ unicodedatafile = {
     port:80,
 },
 
+ proxyServer = process.env.HTTPS_PROXY
+            || process.env.https_proxy
+            || process.env.HTTP_PROXY
+            || process.env.http_proxy,
+
 refs = 0;
 
-var proxyServer = process.env.HTTPS_PROXY
-|| process.env.https_proxy
-|| process.env.HTTP_PROXY
-|| process.env.http_proxy;
 
 // based on https://github.com/mathiasbynens/jsesc
 function escape(charValue) {
@@ -130,7 +131,8 @@ function download_file(callback) {
 
         console.log('Proxy server detected, using proxy settings to download (%s)', proxyServer);
 
-        unicodedatafile.path = unicodedatafile.host + unicodedatafile.path;
+        unicodedatafile.path = unicodedatafile.host
+                             + unicodedatafile.path;
         unicodedatafile.host = proxyVars[2];
         unicodedatafile.port = proxyVars[4];
     }
