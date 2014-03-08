@@ -127,7 +127,7 @@ function download_file(callback) {
                 unicodedatafile.port, unicodedatafile.path);
 
     if (proxyServer) {
-        var proxyVars = proxyServer.match(/^(http:\/\/)?([^:\/]+)(:([0-9]+))?/i);
+        var proxyVars = proxyServer.match(/^([^:/]*:[/]{2})?([^:/]+)(:([0-9]+))?/i);
 
         console.log('Proxy server detected, using proxy settings to download (%s)', proxyServer);
 
