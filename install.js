@@ -132,6 +132,8 @@ function download_file(callback) {
         console.log('Proxy server detected, using proxy settings to download (%s)', proxyServer);
 
         unicodedatafile.path = unicodedatafile.host
+                             + ":"
+                             + unicodedatafile.port
                              + unicodedatafile.path;
         unicodedatafile.host = proxyVars[2];
         unicodedatafile.port = proxyVars[4];
