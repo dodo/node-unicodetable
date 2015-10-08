@@ -16,9 +16,13 @@ sudo emerge unicode-data # optional
 npm install unicode
 ```
 
-If you have problems installing `UnicodeData.txt` because unicode.org is down or you're behind a proxy, try installing unicode-data via your system package installer.
+# unicode is now installed with latest unicode categories and this categories are build daily by travis and [nightli](https://nightli.es/)
 
-If you got the file already at hand you can specify the path to it in the environment varialbe `NODE_UNICODETABLE_UNICODEDATA_TXT`.
+~~If you have problems installing `UnicodeData.txt` because unicode.org is down or you're behind a proxy, try installing unicode-data via your system package installer.~~
+
+~~If you got the file already at hand you can specify the path to it in the environment varialbe `NODE_UNICODETABLE_UNICODEDATA_TXT`.~~
+
+
 
 ## example
 

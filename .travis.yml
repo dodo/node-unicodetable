@@ -1,6 +1,21 @@
-before_script: "npm install --dev"
-script: "npm test"
+before_script:
+  - npm install --dev
+  - mkdir -p category
+  - rm -rf category/*.js
+  - 'git config user.name "Travis-CI"'
+  - 'git config user.email "travis@travis-ci.org"'
+  - git remote rm origin
+  - 'git remote add origin https://${GH_USER}:${GH_TOKEN}@${GH_REF}'
+script: 'npm update && npm test && bash ./deploy-categories.sh'
 language: node_js
 node_js:
-    - 0.8
-    - 0.10
+  - 0.1
+  - 0.12
+branches:
+  only:
+    - master
+env:
+  global:
+    - secure: h41DuLT5aOSi+7f4TejKodftOYAA0XEfOTHlKSCN+WtFRKooyyi+Gcso9FSGCs3TY41Hmoeo0nZmmsa8Es8/pl0jumI8NhGYpIseuZRjKb3jxQtynyjfwwRLhJI/UP++i7qLLR5T9ngGnVNn8fibMWbr73yYKr5jVNUtMJIQvK21JAiabET/I86aD2BkKONoFB1wzWnBnnKCvxp8Xqnf71izcNzTsMPd4+/H93csLq32BgqOtQHLVLKWdo9A2swMzHxUe9kwUwpE5DOS5ABCy7etRd60UrQbt6pcqWhkw/T9S0+pIWoZnoit2c16GvNUK/fbFMtioUtI1ax5F3JN76tbM7e3wzwq9KPf8h4M4FLNiypuPVmbwNHFaefdyd0FW2qRP3J2+UrHtaMh/pcbiAzOMqRGGqHHQw4kL1FL2g/Xt37yLgI1xZJdDZy+mVrC8vkozu9TGwAy6OsgOczKfJUdWEXs98VFXozgLPU3l1yhZXjO0Q1aKaHIFMnJyEngtH8IAz7Ht3pau8y/rHFGFwRQ5I649P0aGTGfeq/jyqTzJOtOyuQGMRwMGn2lU4wMUCYS8LMOCgfUA0/LHiX6IuxMM1nDyQikoPZpPp7D7Q9rBuUuG2fKluvrA0oFIJqrmerRAwYysVEgTYzVuSHSib6HmSvELglFKjND5saDROY=
+    - secure: SlrOK1m2/maUNrBCij3FXNk6l9qUJBgD87oL9xSAwKXkQHwtZLqCUx4hpTAxkQDlrKommRz+MlL1/BY2679FRacZxMGDwawVf38G4Q/mKp4YiGECs6+oUK8oFhp0mbwxgz/ZUH848NNbwsZ+tsMR7KUHDIBwL+xFP+1pxtA3O7DXFp401xKAVcf7KOx6l+XgZbSCv1Opk6RGuLCXqjm6OUcLTNWab/ZKRDCR/IeFqvVBt9Vc5LZQpv9F9s+JRGIbQ6CBzsp1UClG/zJQzjynGYhh7TrWZIjr6nqG3iZRRzzMqC/bdF5ai82pkXa2OAmCgGY68ASJRMxHJl+Dwyez8161RM347hLXKj6b+YavfE/U7CZBi8gE1jihi4Fctr9Mbux3DMRUnU/qercIW7xPHG8u2dEw2nI143tIkXFFddlO5AxCXTbMSEyz1ash3d6sHGhDhfUXYO4KFE3t9XxiIBRvRCRi33QNxU9OxZACoNlcIMJzqNB/ceMR6Ode7xIKyrWPxbMPrUjFj7TDc+veW2jvIH7xxT0L4V7VKV2QcoMO4eQ92+2bm8LT35kxdPZVFyi/59IN6AW9CZfcgp4C23W5c4cA/dXDGUsisKNDRC+pUBdx87T7xq6ECT05ZVM5OT/FOBoD2pWOZDVKQJ0HFBOiplqOgue8NiNEqwiUPZU=
+    - secure: 0/G66JEdJ5P0wb1LY3OxffvqoWdRjzv7VMUwSV52MpcpumB0X6T5GBHs45MzIQF1J121R+IqPgq6w4/q8nYeT9uQ4mHbIIlyuXk8CuYVyCkdB0SN9ymFbW62dN2xbcyHsfx/ZbgqR7r6rKf02dcDrXpkSoR8brMRqcPhbBzXZNubld4gjHmW0ULVpUKGMfXJ3WX5mi0F7qkT3wA7zHGY2ijIVrTX26Aj7Rf4SriTCj5SQycCJwruydXiQBMfZTGHas7QxPAlJZdyQt2cuMz4sTu5Z/rt6lTnJCtepJmOlyuz+UJ6gKLpTpie0y4UMr4d5vEN2cFOf6SSQuVjFmD3CaDHCyhpEHzwn18S5F2XEfjFMM+/Jc+NuE2BXsdpsMymOuvRORwbxfrsqRNx6DqxP1AD9AiqYOZ2Bu80UJifNB4otfbHo0mq2n75VkVSNXcuxJD6+j1/UdhAINRTcpcrK2bSE97fBGHR0yC/6TgDLiFeyzkdE7of6n8QZFsdlR3TLeOXBu9R8AvV/WY6a7HMrH1GxKLnUpR+ueeZ7WNiduPLrFCZbk35YMEXF3tVvzza1vy+saagEUTVSSHmfeoI40918RSdrTlClG0/j6g/9OE2XECVX6fnMwcC2grdNVpfJR9JOJ/ICK7YXGVeA6C9Q3zmsyiybCpECzeKu1nBCfE=
