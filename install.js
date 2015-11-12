@@ -131,10 +131,14 @@ function download_file(callback) {
 
         console.log('Proxy server detected, using proxy settings to download (%s)', proxyServer);
 
-        unicodedatafile.path = unicodedatafile.host
-                             + ":"
+        unicodedatafile.path = 'http://'
+                             + unicodedatafile.host
+                             + ':'
                              + unicodedatafile.port
                              + unicodedatafile.path;
+        unicodedatafile.headers = {
+          Host: unicodedatafile.host
+        };
         unicodedatafile.host = proxyVars[2];
         unicodedatafile.port = proxyVars[4];
     }
@@ -179,4 +183,3 @@ if (!module.parent) { // not required
         download_file:download_file,
     };
 }
-
