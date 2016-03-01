@@ -17,6 +17,7 @@ systemfiles = [
     process.env.NODE_UNICODETABLE_UNICODEDATA_TXT || "UnicodeData.txt", // manually downloaded
 ],
 unicodedatafile = {
+    scheme: "http",
     host: "unicode.org",
     path: "/Public/UNIDATA/UnicodeData.txt",
     method: 'GET',
@@ -123,7 +124,7 @@ function read_file(success_cb, error_cb) {
 
 function download_file(callback) {
     var timeouthandle = null;
-    console.log("%s %s:%d%s", unicodedatafile.method, unicodedatafile.host,
+    console.log("%s %s://%s:%d%s", unicodedatafile.method, unicodedatafile.scheme, unicodedatafile.host,
                 unicodedatafile.port, unicodedatafile.path);
 
     if (proxyServer) {
