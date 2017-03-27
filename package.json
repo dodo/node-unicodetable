@@ -2,7 +2,7 @@
 , "description": "unicode lookup table"
 , "version": "0.6.1"
 , "author": "dodo (https://github.com/dodo)"
-, "contributors": ["Mathias Bynens <mathias@qiwi.be> (http://mathiasbynens.be/)"]
+, "contributors": ["Mathias Bynens <mathias@qiwi.be> (http://mathiasbynens.be/)", "Thomas Danecker <thomas.danecker@eversports.com>"]
 , "homepage": "http://github.com/dodo/node-unicodetable"
 , "repository": {
     "type": "git",
@@ -10,7 +10,6 @@
   }
 , "engines": {"node": ">= 0.8.x"}
 , "scripts": {
-    "postinstall": "node install.js",
     "update": "node install.js",
     "test": "node test.js"}
 , "dependencies": {

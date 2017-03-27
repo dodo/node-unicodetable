@@ -14,6 +14,7 @@ keys =  ['value', 'name', 'category', 'class',
 systemfiles = [
     "/usr/share/unicode/UnicodeData.txt", // debian
     "/usr/share/unicode-data/UnicodeData.txt", // gentoo
+    "/usr/share/unicode/ucd/UnicodeData.txt", // CentOS
     process.env.NODE_UNICODETABLE_UNICODEDATA_TXT || "UnicodeData.txt", // manually downloaded
 ],
 unicodedatafile = {

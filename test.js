@@ -11,22 +11,15 @@ var categories = [
 ].join(' ').split(' ');
 
 
-process.stdout.write("   install\r ");
-require('child_process').exec("node install.js", {stdio:'ignore'}, function (err) {
-    assert.ifError(err);
-    process.stdout.write("\x1B[32m✓\x1B[39m install\n"); // ✓
-    categories.forEach(function (cat) {
-        assert.doesNotThrow(function () {
-            process.stdout.write("   unicode/category/"+cat+"\r ");
-            // test if we can load it
-            require('./category/'+cat);
-            // clean up
-            delete require.cache[path.join(__dirname, 'category', cat+".js")];
-            // ✓
-            process.stdout.write("\x1B[32m✓\x1B[39m unicode/category/"+cat+"\n");
-        }, function(err){if(err){console.error(err);return 1}}, "failed to load "+cat+".js");
-    });
-    console.log("done.");
-    process.exit(0);
+categories.forEach(function (cat) {
+    assert.doesNotThrow(function () {
+        process.stdout.write("   unicode/category/"+cat+"\r ");
+        // test if we can load it
+        require('./category/'+cat);
+        // clean up
+        delete require.cache[path.join(__dirname, 'category', cat+".js")];
+        // ✓
+        process.stdout.write("\x1B[32m✓\x1B[39m unicode/category/"+cat+"\n");
+    }, function(err){if(err){console.error(err);return 1}}, "failed to load "+cat+".js");
 });
-
+console.log("done.");
