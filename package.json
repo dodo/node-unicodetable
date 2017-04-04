@@ -1,22 +1,33 @@
-{ "name": "unicode"
-, "description": "unicode lookup table"
-, "version": "0.6.1"
-, "author": "dodo (https://github.com/dodo)"
-, "contributors": ["Mathias Bynens <mathias@qiwi.be> (http://mathiasbynens.be/)"]
-, "homepage": "http://github.com/dodo/node-unicodetable"
-, "repository": {
+{
+  "name": "unicode",
+  "description": "unicode lookup table",
+  "version": "0.6.1",
+  "author": "dodo (https://github.com/dodo)",
+  "contributors": [
+    "Mathias Bynens <mathias@qiwi.be> (http://mathiasbynens.be/)",
+    "Thomas Danecker <thomas.danecker@eversports.com>"
+  ],
+  "homepage": "http://github.com/eversport/node-unicodetable",
+  "repository": {
     "type": "git",
-    "url": "git://github.com/dodo/node-unicodetable.git"
-  }
-, "engines": {"node": ">= 0.8.x"}
-, "scripts": {
-    "postinstall": "node install.js",
+    "url": "git://github.com/eversport/node-unicodetable.git"
+  },
+  "engines": {
+    "node": ">= 0.8.x"
+  },
+  "scripts": {
     "update": "node install.js",
-    "test": "node test.js"}
-, "dependencies": {
-    "bufferstream": ">= 0.6.2"
-  }
-, "licenses" : [
-    { "type": "MIT" ,
-      "url": "http://github.com/dodo/node-unicodetable/raw/master/LICENSE"} ]
+    "test": "node test.js",
+    "np": "np"
+  },
+  "devDependencies": {
+    "bufferstream": ">= 0.6.2",
+    "np": "2.13.1"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/dodo/node-unicodetable/raw/master/LICENSE"
+    }
+  ]
 }

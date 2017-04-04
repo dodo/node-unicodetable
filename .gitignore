@@ -1,4 +1,6 @@
 *~
 *.swp
+.idea
 node_modules/
-category/*.js
+UnicodeData.txt
+*.log
